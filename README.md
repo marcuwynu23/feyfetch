@@ -28,39 +28,72 @@ git clone https://github.com/marcuwynu23/feyfetch.git
 
 ## Usage
 
-1. Create a `requests.json` file in your `requests` directory with the following structure:
+1. Create a `requests.json`or any name for your requests file in your `requests` directory with the following structure:
 
 ```json
 {
-  "name": "Your API Route Test",
+  "name": "Application API Requests",
+  "root": "http://localhost:9000/api",
   "headers": {
-    "Content-Type": "application/json",
-    "Authorization": "Bearer your-auth-token"
+    "Content-Type": "application/json"
   },
-  "urls": [
+  "routes": [
     {
-      "url": "https://api.example.com/endpoint",
+      "path": "/auth/login",
       "method": "GET"
     },
     {
-      "url": "https://api.example.com/endpoint",
+      "path": "/auth/login",
       "method": "POST",
       "body": {
-        "key": "value"
+        "email": "admin@admin.com",
+        "password": "admin"
       }
+    },
+    {
+      "path": "/auth/register",
+      "method": "POST",
+      "body": {
+        "email": "admin@admin.com",
+        "password": "admin",
+        "role": "admin"
+      }
+    },
+    {
+      "path": "/auth/recovery",
+      "method": "POST",
+      "body": {
+        "email": "admin@admin.com"
+      }
+    },
+    {
+      "path": "/auth/reset",
+      "method": "POST",
+      "body": {
+        "email": "admin@admin.com",
+        "password": "admin",
+        "token": "123"
+      }
+    },
+    {
+      "path": "/auth/logout",
+      "method": "GET"
+    },
+    {
+      "path": "/users",
+      "method": "GET"
     }
-    // Add more requests as needed
   ]
 }
 ```
 
-2. Run FeyFetch by executing the main script and providing the path to the directory containing `requests.json`:
+2. Run FeyFetch by executing the main script and providing the path to the directory containing your requests configuration file:
 
 ```bash
-fey
+fey <filename>
 ```
 
-3. FeyFetch will automate the testing of your API routes based on the requests defined in `requests.json`, providing insights into the functionality and performance of your endpoints.
+3. FeyFetch will automate the testing of your API routes based on the requests defined in request json file for example `requests.json` inside the requests folder, providing insights into the functionality and performance of your endpoints.
 
 ## Contributing
 
