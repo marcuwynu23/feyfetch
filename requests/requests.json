@@ -1,40 +1,55 @@
 {
   "name": "GitHub API",
+  "root": "http://localhost:9000/api",
   "headers": {
     "Content-Type": "application/json",
     "Authorization": "Bearer 123"
   },
-  "urls": [
+  "routes": [
     {
-      "url": "https://web.facebook.com/",
+      "path": "/auth/login",
       "method": "GET"
     },
     {
-      "url": "https://api.github.com/repos/octokit/octokit.rb/issues",
-      "method": "GET"
-    },
-    {
-      "url": "https://api.github.com/repos/octokit/octokit.rb/issues/123",
+      "path": "/auth/login",
       "method": "POST",
       "body": {
-        "title": "Found a bug",
-        "body": "I'm having a problem with this.",
-        "assignees": ["octocat"],
-        "milestone": 1,
-        "labels": ["bug"]
+        "email": "admin@admin.com",
+        "password": "admin"
       }
     },
     {
-      "url": "https://api.github.com/repos/octokit/octokit.rb/issues/123/comments",
-      "method": "UPDATE",
+      "path": "/auth/register",
+      "method": "POST",
       "body": {
-        "body": "Me too"
+        "email": "admin@admin.com",
+        "password": "admin",
+        "role": "admin"
       }
     },
     {
-      "url": "https://api.github.com/repos/octokit/octokit.rb/issues/123/labels",
-      "method": "DELETE",
-      "body": ["bug"]
+      "path": "/auth/recovery",
+      "method": "POST",
+      "body": {
+        "email": "admin@admin.com"
+      }
+    },
+    {
+      "path": "/auth/reset",
+      "method": "POST",
+      "body": {
+        "email": "admin@admin.com",
+        "password": "admin",
+        "token": "123"
+      }
+    },
+    {
+      "path": "/auth/logout",
+      "method": "GET"
+    },
+    {
+      "path": "/users",
+      "method": "GET"
     }
   ]
 }
