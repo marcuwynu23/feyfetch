@@ -1,8 +1,8 @@
 import json
-from token import ENCODING
 import requests
 import os
 import sys
+from datetime import datetime
 
 
 # ANSI color codes for terminal output
@@ -71,6 +71,8 @@ def execute_requests_from_json(json_filename):
 
                         print(
                             f"Request to {url} ({method}): {color_status}")
+
+                        date = datetime.now().strftime("%Y-%m-%d")
                         if response.ok:
                             # make directory if it doesn't exist for requests
                             if not os.path.exists(RECORDS_DIR):
@@ -78,11 +80,11 @@ def execute_requests_from_json(json_filename):
 
                             # write the response to a file if there's content
                             if response.text:
-                                RECORD_TEXT = f"{RECORDS_DIR}/output_{method.lower()}_{path.replace('/', '_')}.txt"
+                                RECORD_TEXT = f"{RECORDS_DIR}/{date}-{method.lower()}{path.replace('/', '-')}.txt"
                                 with open(RECORD_TEXT, 'w', encoding=ENCODING) as f:
                                     f.write(response.text)
                             elif response.json():
-                                RECORD_JSON = f"{RECORDS_DIR}/output_{method.lower()}_{path.replace('/', '_')}.json"
+                                RECORD_JSON = f"{RECORDS_DIR}/{date}-{method.lower()}{path.replace('/', '-')}.json"
                                 with open(RECORD_JSON, 'w', encoding=ENCODING) as f:
                                     json.dump(response.json(), f)
                             else:
@@ -93,11 +95,11 @@ def execute_requests_from_json(json_filename):
                                 os.makedirs(LOGS_DIR)
                             # write the response to a file if there's content
                             if response.text:
-                                LOG_TEXT = f"{LOGS_DIR}/log_{method.lower()}_{path.replace('/', '_')}.txt"
+                                LOG_TEXT = f"{LOGS_DIR}/{date}-{method.lower()}{path.replace('/', '-')}.txt"
                                 with open(LOG_TEXT, 'w', encoding=ENCODING) as f:
                                     f.write(response.text)
                             elif response.json():
-                                LOG_JSON = f"{LOGS_DIR}/log_{method.lower()}_{path.replace('/', '_')}.json"
+                                LOG_JSON = f"{LOGS_DIR}/{date}-{method.lower()}{path.replace('/', '-')}.json"
                                 with open(LOG_JSON, 'w', encoding=ENCODING) as f:
                                     json.dump(response.json(), f)
                             else:
