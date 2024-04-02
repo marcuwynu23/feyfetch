@@ -30,14 +30,17 @@ def execute_requests_from_json(json_filename):
 
             headers = request_data.get('headers', {})
             routes = request_data.get('routes', [])
+            # Check if the root URL responds
+            try:
+                root_response = requests.head(root)
+                if not root_response.ok:
+                    pass
+            except requests.ConnectionError:
+                print(
+                    f"Error: Failed to connect to {root}. Is the server running?")
+                sys.exit(1)
 
             try:
-                # Check if the root URL responds
-                root_response = requests.head(root)
-                if root_response.status_code != 200:
-                    print(f"Error: Root URL {root} is not responding")
-                    sys.exit(1)
-
                 for route_info in routes:
                     path = route_info['path']
                     method = route_info.get('method', 'GET')
