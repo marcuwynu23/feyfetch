@@ -1,0 +1,40 @@
+{
+  "name": "GitHub API",
+  "headers": {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer 123"
+  },
+  "urls": [
+    {
+      "url": "https://web.facebook.com/",
+      "method": "GET"
+    },
+    {
+      "url": "https://api.github.com/repos/octokit/octokit.rb/issues",
+      "method": "GET"
+    },
+    {
+      "url": "https://api.github.com/repos/octokit/octokit.rb/issues/123",
+      "method": "POST",
+      "body": {
+        "title": "Found a bug",
+        "body": "I'm having a problem with this.",
+        "assignees": ["octocat"],
+        "milestone": 1,
+        "labels": ["bug"]
+      }
+    },
+    {
+      "url": "https://api.github.com/repos/octokit/octokit.rb/issues/123/comments",
+      "method": "UPDATE",
+      "body": {
+        "body": "Me too"
+      }
+    },
+    {
+      "url": "https://api.github.com/repos/octokit/octokit.rb/issues/123/labels",
+      "method": "DELETE",
+      "body": ["bug"]
+    }
+  ]
+}
