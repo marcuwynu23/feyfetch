@@ -1,4 +1,12 @@
+<div align="center">
+
 # FeyFetch
+
+[![GitHub license](https://img.shields.io/github/license/marcuwynu23/feyfetch)](https://github.com/marcuwynu23/feyfetch/blob/main/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/marcuwynu23/feyfetch)](https://github.com/marcuwynu23/feyfetch/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/marcuwynu23/feyfetch)](https://github.com/marcuwynu23/feyfetch/issues)
+
+</div>
 
 FeyFetch is an automated testing tool crafted for efficient testing of REST API routes. It simplifies the process of testing API endpoints, ensuring reliability and performance with ease.
 
