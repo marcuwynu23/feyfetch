@@ -12,7 +12,6 @@ RESET = '\033[0m'
 
 # Constants
 REQUESTS_DIR = "requests"
-RECORDS_DIR = "requests/records"
 LOGS_DIR = "requests/logs"
 ENCODING = "utf-8"
 
@@ -75,16 +74,16 @@ def execute_requests_from_json(json_filename):
                         date = datetime.now().strftime("%Y-%m-%d")
                         if response.ok:
                             # make directory if it doesn't exist for requests
-                            if not os.path.exists(RECORDS_DIR):
-                                os.makedirs(RECORDS_DIR)
+                            if not os.path.exists(LOGS_DIR):
+                                os.makedirs(LOGS_DIR)
 
                             # write the response to a file if there's content
                             if response.text:
-                                RECORD_TEXT = f"{RECORDS_DIR}/{date}-{method.lower()}{path.replace('/', '-')}.txt"
+                                RECORD_TEXT = f"{LOGS_DIR}/{date}-out-{method.lower()}{path.replace('/', '-')}.txt"
                                 with open(RECORD_TEXT, 'w', encoding=ENCODING) as f:
                                     f.write(response.text)
                             elif response.json():
-                                RECORD_JSON = f"{RECORDS_DIR}/{date}-{method.lower()}{path.replace('/', '-')}.json"
+                                RECORD_JSON = f"{LOGS_DIR}/{date}-out-{method.lower()}{path.replace('/', '-')}.json"
                                 with open(RECORD_JSON, 'w', encoding=ENCODING) as f:
                                     json.dump(response.json(), f)
                             else:
@@ -95,11 +94,11 @@ def execute_requests_from_json(json_filename):
                                 os.makedirs(LOGS_DIR)
                             # write the response to a file if there's content
                             if response.text:
-                                LOG_TEXT = f"{LOGS_DIR}/{date}-{method.lower()}{path.replace('/', '-')}.txt"
+                                LOG_TEXT = f"{LOGS_DIR}/{date}-error-{method.lower()}{path.replace('/', '-')}.txt"
                                 with open(LOG_TEXT, 'w', encoding=ENCODING) as f:
                                     f.write(response.text)
                             elif response.json():
-                                LOG_JSON = f"{LOGS_DIR}/{date}-{method.lower()}{path.replace('/', '-')}.json"
+                                LOG_JSON = f"{LOGS_DIR}/{date}-error-{method.lower()}{path.replace('/', '-')}.json"
                                 with open(LOG_JSON, 'w', encoding=ENCODING) as f:
                                     json.dump(response.json(), f)
                             else:
@@ -108,15 +107,12 @@ def execute_requests_from_json(json_filename):
                     except requests.ConnectionError:
                         print(
                             f"Error: Failed to connect to {url}. Is the server running?")
-                        sys.exit(1)
                     except requests.Timeout:
                         print(f"Error: Request to {url} timed out")
-                        sys.exit(1)
 
             except requests.ConnectionError:
                 print(
                     f"Error: Failed to connect to {root}. Is the server running?")
-                sys.exit(1)
 
     except FileNotFoundError:
         print(
@@ -125,7 +121,11 @@ def execute_requests_from_json(json_filename):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: fey <request-filename>")
-        sys.exit(1)
+        for filename in os.listdir(REQUESTS_DIR):
+            filename = filename.replace(".json", "")
+            execute_requests_from_json(filename)
+        sys.exit(0)
+
+    # specific filename
     JSON_FILENAME = sys.argv[1]
     execute_requests_from_json(JSON_FILENAME)
